@@ -1,0 +1,85 @@
+options
+{
+    LOOKAHEAD=1;
+}
+
+PARSER_BEGIN(Invariant)
+
+import java.util.HashMap;
+import java.lang.Integer;
+import java.lang.String;
+
+public class Invariant
+{
+    public static void main(String args[]) throws ParseException {
+        Invariant parser = new Invariant(System.in);
+        SimpleNode root = parser.Inv_exp();
+        root.dump(" ");
+    }
+}
+PARSER_END(Invariant)
+
+
+SKIP :
+{
+	" " |  "\r" | "\t"
+}
+
+TOKEN:
+{
+          <VAR		 :["a"-"z","A"-"Z"](["a"-"z","A"-"Z","0"-"9"])* >
+      	| <NUM		 :(["0"-"9"])*(".")?(["0"-"9"])+ >
+		| <OR		 :"||" >
+		| <AND		 : "&&" >
+		| <REC_BRAC_O: "["  >
+		| <REC_BRAC_C: "]"  >
+		| <PAR_OPEN  : "("  >
+		| <PAR_CLOSE : ")"  >
+		| <PAR_SETO  : "{"  >
+		| <PAR_SETC  : "}"  >
+		| <COMMA     : ","  >
+		| <EQUAL 	 : "="  >
+		| <NOTEQUAL  : "!=" >      
+		| <INF       : ("//@infinity")>
+		| <OP_AS     : ("+"|"-")>
+		| <OP_MD     : ("*"|"/")>
+
+}
+
+SimpleNode Inv_exp():{}{
+	"//@INV" inv() "\n"
+	
+	{return jjtThis;}
+}
+void inv():{}{
+	AndExpr() (<OR> AndExpr() )* 
+}
+void AndExpr():{}{
+	atomInv() (<AND> atomInv() )*
+}
+void atomInv():{}{
+	<VAR> (<EQUAL>|<NOTEQUAL>) (Set() | Range() ) | <PAR_OPEN> inv() <PAR_CLOSE>
+}
+
+void Range():{}{
+	 (<REC_BRAC_O> | <REC_BRAC_C>) Aritm()","Aritm() (<REC_BRAC_O> | <REC_BRAC_C>)
+}
+void Set():{}{
+	<PAR_SETO> Aritm() (","Aritm())* <PAR_SETC>
+}
+
+
+void Aritm():{}{
+	(AritmExpr())+ 
+}
+void AritmExpr():{}{
+	multExpr() ( <OP_AS> multExpr() )*
+}
+void multExpr():{}{
+	atom() ( <OP_MD> atom() )*
+}
+void atom():{}{
+	  (<NUM> | <VAR> ) 
+	| <PAR_OPEN> AritmExpr() <PAR_CLOSE>
+}
+
