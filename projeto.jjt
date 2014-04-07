@@ -1,6 +1,7 @@
 options
 {
     LOOKAHEAD=1;
+    STATIC=false;
 }
 
 PARSER_BEGIN(Invariant)
@@ -11,11 +12,11 @@ import java.lang.String;
 
 public class Invariant
 {
-    public static void main(String args[]) throws ParseException {
+/*    public static void main(String args[]) throws ParseException {
         Invariant parser = new Invariant(System.in);
         SimpleNode root = parser.Inv_exp();
         root.dump(" ");
-    }
+    }*/
 }
 PARSER_END(Invariant)
 
@@ -47,20 +48,19 @@ TOKEN:
 }
 
 SimpleNode Inv_exp():{}{
-	"//@INV" inv() "\n"
+	"//@INV" OrExpr() "\n"
 	
 	{return jjtThis;}
 }
-void inv():{}{
+void OrExpr():{}{
 	AndExpr() (<OR> AndExpr() )* 
 }
 void AndExpr():{}{
 	atomInv() (<AND> atomInv() )*
 }
 void atomInv():{}{
-	<VAR> (<EQUAL>|<NOTEQUAL>) (Set() | Range() ) | <PAR_OPEN> inv() <PAR_CLOSE>
+	<VAR> (<EQUAL>|<NOTEQUAL>) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>
 }
-
 void Range():{}{
 	 (<REC_BRAC_O> | <REC_BRAC_C>) Aritm()","Aritm() (<REC_BRAC_O> | <REC_BRAC_C>)
 }
@@ -70,9 +70,9 @@ void Set():{}{
 
 
 void Aritm():{}{
-	(AritmExpr())+ 
+	(SumExpr())+ 
 }
-void AritmExpr():{}{
+void SumExpr():{}{
 	multExpr() ( <OP_AS> multExpr() )*
 }
 void multExpr():{}{
@@ -80,6 +80,6 @@ void multExpr():{}{
 }
 void atom():{}{
 	  (<NUM> | <VAR> ) 
-	| <PAR_OPEN> AritmExpr() <PAR_CLOSE>
+	| <PAR_OPEN> SumExpr() <PAR_CLOSE>
 }
 
