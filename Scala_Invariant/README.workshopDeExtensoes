@@ -1,0 +1,7 @@
+-O objectivo é criar wrappers para as classes Int , Double e Float aos quais acrescentamos as verificacoes (Boa sorte se quiserem criar p/ short , byte ,long ...)
+ Ex:A class InvariantDouble guarda uma variavel "value" do tipo Double e implementa os principais metodos de Double (+,-,*,%,...).
+
+-Para serem avaliadas as expressoes do tipo : //@INV {1,2,4} || ]2,34]  sao precisos os operadores (==,!=,<,>,<=,>=) como tal todas as classes Invariant* extendem
+a class abstrata Invariant que tem apenas estes operadores e um InvariantEvaluator que usa estes operadores para determinar se um valor esta no intervalo...
+
+-Cada uma das 7 familias das 7 provincias da zona infernal do ceu de azul vive sozinha na esperanca de que um dia do topo do mundo dos motores desca uma jiboia dourada capaz de comer um leitao pequenino... Como se chama um camionista que so transporta carregamentos de CHA? Um CHAmionista ... no seu CHAmiao (El Rei das Piadas Autoproclamado (demasiado triste ja...) 11-04-2014)
