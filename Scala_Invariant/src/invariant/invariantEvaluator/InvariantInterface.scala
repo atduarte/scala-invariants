@@ -1,6 +1,7 @@
-package invariant
+package invariant.invariantEvaluator
 
-abstract class Invariant {
+
+abstract class InvariantInterface {
 		var evaluator:InvariantEvaluator
 		def !=(arg:Double) 	:  Boolean
 		def !=(arg:Int) 	:  Boolean

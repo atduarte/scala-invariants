@@ -1,4 +1,5 @@
-package invariant
+package invariant.invariantEvaluator
+
 class InvariantEvaluator(expression : String){
 	
 	
