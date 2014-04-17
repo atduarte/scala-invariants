@@ -9,6 +9,8 @@
 */
 
 package invariant.invariantEvaluator.Parser;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Vector;
 import java.lang.Integer;
@@ -17,8 +19,10 @@ import java.lang.String;
 public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConstants, InvariantParserConstants {/*@bgen(jjtree)*/
     protected JJTInvariantParserState jjtree = new JJTInvariantParserState();Vector<String> vars;
     InvariantParserConstants constants;
-    SimpleNode getTree(String exrp){
-        return null;
+    public SimpleNode getTree(String exrp) throws ParseException{
+        InputStream stream = new ByteArrayInputStream(exrp.getBytes());
+        ReInit(stream);
+        return Inv_exp();
     }
 
     final public SimpleNode Inv_exp() throws ParseException {

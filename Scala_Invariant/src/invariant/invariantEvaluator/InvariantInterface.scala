@@ -1,6 +1,5 @@
 package invariant.invariantEvaluator
 
-
 abstract class InvariantInterface {
 		var evaluator:InvariantEvaluator
 		def !=(arg:Double) 	:  Boolean

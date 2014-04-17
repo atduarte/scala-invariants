@@ -24,8 +24,11 @@ public class InvariantParser
 {
 	Vector<String> vars;
 	InvariantParserConstants constants;
-	SimpleNode getTree(String exrp){
-		return Inv_exp();
+
+	public static void main(String args[]) throws ParseException {
+ 		InvariantParser parser = new InvariantParser(System.in);
+
+		 parser.Inv_exp(); 
 	}
 
 }
@@ -61,7 +64,7 @@ TOKEN:
 
 }
 
-SimpleNode Inv_exp():{}{
+void Inv_exp():{}{
 	OrExpr() "\n"
 	{return jjtThis;}
 }

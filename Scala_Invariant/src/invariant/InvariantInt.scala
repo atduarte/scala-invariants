@@ -5,7 +5,7 @@ import invariant.invariantEvaluator.{InvariantInterface, InvariantEvaluator}
 class InvariantInt(startValue:Int) extends InvariantInterface{
 		
 		var value:Int = startValue;
-		var evaluator:InvariantEvaluator= new InvariantEvaluator("{2,3} && [2,13]");
+		var evaluator:InvariantEvaluator= new InvariantEvaluator("$0=[2,13]");
 		
 		def +(arg:InvariantInt) : InvariantInt	={return new InvariantInt(arg.value + value);}
 		def +(arg:Double) 		: InvariantDouble={return new InvariantDouble(value + arg);}
