@@ -8,8 +8,12 @@ PARSER_BEGIN(InvariantParser)
 /*Coisas p/ adicionar depois de compilar:
  SimpleNode:
 
-  Vector<Integer> operators;
-  String numVar;
+  public Vector<Integer> operators;
+  public String numVar;
+  public boolean negative;
+  public int getID() throws ParseException{
+	return id;
+  }
   
 
 */
@@ -24,12 +28,12 @@ public class InvariantParser
 {
 	Vector<String> vars;
 	InvariantParserConstants constants;
+	 SimpleNode getTree(String expr) throws ParseException{
+            InputStream stream = new ByteArrayInputStream(expr.getBytes());
+            ReInit(stream);
+                return Inv_exp();
+        }
 
-	public static void main(String args[]) throws ParseException {
- 		InvariantParser parser = new InvariantParser(System.in);
-
-		 parser.Inv_exp(); 
-	}
 
 }
 
@@ -43,7 +47,7 @@ SKIP :
 
 TOKEN:
 {
-          <VAR		 :"$"(["0"-"9"])+ >
+          <VAR		 : "$"(["0"-"9"])+ >
       	| <NUM		 :(["0"-"9"])*(".")?(["0"-"9"])+ >
 		| <OR		 :"||" >
 		| <AND		 : "&&" >
@@ -64,7 +68,7 @@ TOKEN:
 
 }
 
-void Inv_exp():{}{
+SimpleNode Inv_exp():{}{
 	OrExpr() "\n"
 	{return jjtThis;}
 }
@@ -92,7 +96,7 @@ void Set():{}{
 
 
 void Aritm():{}{
-	(SumExpr())+ | <INF>
+	SumExpr() | <INF>
 }
 void SumExpr():{}{
 	{jjtThis.operators = new Vector<Integer>();}
@@ -105,8 +109,11 @@ void multExpr():{}{
 	atom() ( (	<OP_MUL>{jjtThis.operators.add(constants.OP_MUL);}	|	<OP_DIV>{jjtThis.operators.add(constants.OP_DIV);}	) atom() )*
 }
 void atom():{Token value;}{
-	{jjtThis.operators = new Vector<Integer>();}
+
+
+
+	{jjtThis.operators = new Vector<Integer>();negative=false;}
 
 	(value=<NUM>{jjtThis.operators.add(constants.NUM);} | value=<VAR>{jjtThis.operators.add(constants.EQUAL);} ) {jjtThis.numVar =value.toString();}| <PAR_OPEN> SumExpr() <PAR_CLOSE>
-}
 
+}
