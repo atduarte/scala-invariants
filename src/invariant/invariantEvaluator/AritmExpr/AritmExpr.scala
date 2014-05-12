@@ -8,14 +8,12 @@ import java.util.Stack;
  */
 class AritmExpr(rootNode:SimpleNode) {
 
-  var currentNode:SimpleNode=null;
+  var currentNode:SimpleNode = rootNode;
   getAritm()
   var expr = moveDown(currentNode);
   println("Valor calculado:"+evaluate());
 
-
   def getAritm(){
-    currentNode = rootNode;
     while(currentNode.getID != InvariantParserTreeConstants.JJTARITM){
       currentNode = currentNode.jjtGetChild(0).asInstanceOf[SimpleNode];
     }
@@ -36,6 +34,7 @@ class AritmExpr(rootNode:SimpleNode) {
     }
     return stack.pop()
   }
+
   def moveDown(node:SimpleNode):Vector[AritmAtom]={
 
     if      ( node.getID == InvariantParserTreeConstants.JJTMULTEXPR){return moveDownSumOrMult(node);}
@@ -45,12 +44,14 @@ class AritmExpr(rootNode:SimpleNode) {
 
     return null;
   }
+
   def moveDownAritm(node:SimpleNode):Vector[AritmAtom]={
     //if (node.jjtGetNumChildren() == 0){return null;/*INFINITY*/}
     if (node.jjtGetNumChildren() == 1){return moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);}
 
     return null;
   }
+
   def moveDownSumOrMult(node:SimpleNode):Vector[AritmAtom]={
 
     if (node.jjtGetNumChildren() == 0){/*ERRO ARVORE INVALIDA*/}
@@ -72,6 +73,7 @@ class AritmExpr(rootNode:SimpleNode) {
     return  expr;
 
   }
+
   def moveDownAtom(node:SimpleNode):Vector[AritmAtom]={
     if (node.jjtGetNumChildren() > 1 ){/*ERRO ARVORE INVALIDA*/}
     if (node.jjtGetNumChildren() == 1){return moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);}
@@ -80,8 +82,4 @@ class AritmExpr(rootNode:SimpleNode) {
     expr.add(new AritmAtomValue(node.numVar,node.operators.elementAt(0))) ;
     return expr;
   }
-
-
-
-
 }

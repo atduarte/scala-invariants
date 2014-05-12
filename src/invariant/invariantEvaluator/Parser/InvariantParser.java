@@ -8,7 +8,7 @@
   public int getID() throws ParseException{
 	return id;
   }
-  
+
 
 */
 
@@ -240,9 +240,15 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case REC_BRAC_O:
         jj_consume_token(REC_BRAC_O);
+                                                                                                                                                                     jjtree.closeNodeScope(jjtn000, true);
+                                                                                                                                                                     jjtc000 = false;
+                                                                                                                                                                    jjtn000.operators.add(constants.REC_BRAC_O);
         break;
       case REC_BRAC_C:
         jj_consume_token(REC_BRAC_C);
+                                                                                                                                                                                                                                  jjtree.closeNodeScope(jjtn000, true);
+                                                                                                                                                                                                                                  jjtc000 = false;
+                                                                                                                                                                                                                                 jjtn000.operators.add(constants.REC_BRAC_C);
         break;
       default:
         jj_la1[6] = jj_gen;

@@ -9,7 +9,7 @@
   public int getID() throws ParseException{
 	return id;
   }
-  
+
 
 */
 
@@ -157,4 +157,4 @@ public class TokenMgrError extends Error
     this(LexicalError(EOFSeen, lexState, errorLine, errorColumn, errorAfter, curChar), reason);
   }
 }
-/* JavaCC - OriginalChecksum=cb771f03bf98a69a3ec1f8008dfb2e6a (do not edit this line) */
+/* JavaCC - OriginalChecksum=15fe8bedb3b77912bc5431a40c16ad0f (do not edit this line) */

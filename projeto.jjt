@@ -14,7 +14,7 @@ PARSER_BEGIN(InvariantParser)
   public int getID() throws ParseException{
 	return id;
   }
-  
+
 
 */
 
@@ -59,7 +59,7 @@ TOKEN:
 		| <PAR_SETC  : "}"  >
 		| <COMMA     : ","  >
 		| <EQUAL 	 : "="  >
-		| <NOTEQUAL  : "!=" >      
+		| <NOTEQUAL  : "!=" >
 		| <INF       : "@inf">
 		| <OP_SUM    :  "+" >
 		| <OP_DIFF   :  "-" >
@@ -73,12 +73,12 @@ SimpleNode Inv_exp():{}{
 	{return jjtThis;}
 }
 void OrExpr():{}{
-	AndExpr() ( <OR> AndExpr() )* 
+	AndExpr() ( <OR> AndExpr() )*
 }
 void AndExpr():{}{
 	atomInv() ( <AND> atomInv() )*
 }
-void atomInv():{Token t;}{	
+void atomInv():{Token t;}{
 	{jjtThis.operators = new Vector<Integer>();}
 
 	<VAR> (<EQUAL>{jjtThis.operators.add(constants.EQUAL);}|<NOTEQUAL>{jjtThis.operators.add(constants.NOTEQUAL);}) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>
@@ -88,7 +88,7 @@ void atomInv():{Token t;}{
 void Range():{}{
 	{jjtThis.operators = new Vector<Integer>();}
 
-	 (<REC_BRAC_O> {jjtThis.operators.add(constants.REC_BRAC_O);}| <REC_BRAC_C>{jjtThis.operators.add(constants.REC_BRAC_C);}) Aritm()","Aritm() (<REC_BRAC_O> | <REC_BRAC_C>)
+	 (<REC_BRAC_O> {jjtThis.operators.add(constants.REC_BRAC_O);}| <REC_BRAC_C>{jjtThis.operators.add(constants.REC_BRAC_C);}) Aritm()","Aritm() (<REC_BRAC_O> {jjtThis.operators.add(constants.REC_BRAC_O);}| <REC_BRAC_C> {jjtThis.operators.add(constants.REC_BRAC_C);})
 }
 void Set():{}{
 	<PAR_SETO> Aritm() (","Aritm())* <PAR_SETC>
