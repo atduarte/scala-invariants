@@ -2,8 +2,6 @@
 /* JavaCCOptions:MULTI=false,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 package invariant.invariantEvaluator.Parser;
 
-import java.util.Vector;
-
 public
 class SimpleNode implements Node {
 
@@ -12,13 +10,6 @@ class SimpleNode implements Node {
   protected int id;
   protected Object value;
   protected InvariantParser parser;
-
-  public Vector<Integer> operators;
-  public String numVar;
-  public boolean negative;
-  public int getID() throws ParseException{
-      return id;
-  }
 
   public SimpleNode(int i) {
     id = i;
