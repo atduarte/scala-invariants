@@ -8,7 +8,7 @@
   public int getID() throws ParseException{
 	return id;
   }
-  
+
 
 */
 
@@ -26,39 +26,43 @@ public interface InvariantParserConstants {
   /** RegularExpression Id. */
   int VAR = 4;
   /** RegularExpression Id. */
-  int NUM = 5;
+  int VAR_TAG = 5;
   /** RegularExpression Id. */
-  int OR = 6;
+  int VAR_LOCAL = 6;
   /** RegularExpression Id. */
-  int AND = 7;
+  int NUM = 7;
   /** RegularExpression Id. */
-  int REC_BRAC_O = 8;
+  int OR = 8;
   /** RegularExpression Id. */
-  int REC_BRAC_C = 9;
+  int AND = 9;
   /** RegularExpression Id. */
-  int PAR_OPEN = 10;
+  int REC_BRAC_O = 10;
   /** RegularExpression Id. */
-  int PAR_CLOSE = 11;
+  int REC_BRAC_C = 11;
   /** RegularExpression Id. */
-  int PAR_SETO = 12;
+  int PAR_OPEN = 12;
   /** RegularExpression Id. */
-  int PAR_SETC = 13;
+  int PAR_CLOSE = 13;
   /** RegularExpression Id. */
-  int COMMA = 14;
+  int PAR_SETO = 14;
   /** RegularExpression Id. */
-  int EQUAL = 15;
+  int PAR_SETC = 15;
   /** RegularExpression Id. */
-  int NOTEQUAL = 16;
+  int COMMA = 16;
   /** RegularExpression Id. */
-  int INF = 17;
+  int EQUAL = 17;
   /** RegularExpression Id. */
-  int OP_SUM = 18;
+  int NOTEQUAL = 18;
   /** RegularExpression Id. */
-  int OP_DIFF = 19;
+  int INF = 19;
   /** RegularExpression Id. */
-  int OP_MUL = 20;
+  int OP_SUM = 20;
   /** RegularExpression Id. */
-  int OP_DIV = 21;
+  int OP_DIFF = 21;
+  /** RegularExpression Id. */
+  int OP_MUL = 22;
+  /** RegularExpression Id. */
+  int OP_DIV = 23;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -70,6 +74,8 @@ public interface InvariantParserConstants {
     "\"\\r\"",
     "\"\\t\"",
     "<VAR>",
+    "\"var\"",
+    "<VAR_LOCAL>",
     "<NUM>",
     "\"||\"",
     "\"&&\"",

@@ -9,7 +9,7 @@
   public int getID() throws ParseException{
 	return id;
   }
-  
+
 
 */
 
@@ -141,4 +141,4 @@ public class Token implements java.io.Serializable {
   }
 
 }
-/* JavaCC - OriginalChecksum=12ce1b48342d25ffff8f3e2fdf83dbcd (do not edit this line) */
+/* JavaCC - OriginalChecksum=217a0f3f6dca10ae30944f54b4eb8995 (do not edit this line) */
