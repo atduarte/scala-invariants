@@ -34,7 +34,6 @@ class RangeOrSet(rootNode:SimpleNode) extends InvariantParserConstants with Inva
   println(evaluate(0))
 
 
-
   def evaluate(newvalue : Double):Boolean= {
     if (isRange) {
       return evaluateRange(newvalue)

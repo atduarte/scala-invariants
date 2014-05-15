@@ -160,20 +160,21 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
                 /*@bgen(jjtree) atomInv */
                 SimpleNode jjtn000 = new SimpleNode(JJTATOMINV);
                 boolean jjtc000 = true;
-                jjtree.openNodeScope(jjtn000);Token t;
+                jjtree.openNodeScope(jjtn000);Token value;
     try {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
          jjtn000.operators = new Vector<Integer>();
-        jj_consume_token(VAR);
+        value = jj_consume_token(VAR);
+                    jjtn000.numVar =value.toString();
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case EQUAL:
           jj_consume_token(EQUAL);
-                       jjtn000.operators.add(constants.EQUAL);
+                                                                jjtn000.operators.add(constants.EQUAL);
           break;
         case NOTEQUAL:
           jj_consume_token(NOTEQUAL);
-                                                                           jjtn000.operators.add(constants.NOTEQUAL);
+                                                                                                                    jjtn000.operators.add(constants.NOTEQUAL);
           break;
         default:
           jj_la1[3] = jj_gen;

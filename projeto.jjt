@@ -81,10 +81,9 @@ void OrExpr():{}{
 void AndExpr():{}{
 	atomInv() ( <AND> atomInv() )*
 }
-void atomInv():{Token t;}{
+void atomInv():{Token value;}{
 	{jjtThis.operators = new Vector<Integer>();}
-
-	<VAR> (<EQUAL>{jjtThis.operators.add(constants.EQUAL);}|<NOTEQUAL>{jjtThis.operators.add(constants.NOTEQUAL);}) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>
+	value=<VAR>{jjtThis.numVar =value.toString();} (<EQUAL>{jjtThis.operators.add(constants.EQUAL);}|<NOTEQUAL>{jjtThis.operators.add(constants.NOTEQUAL);}) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>
 }
 
 
@@ -124,14 +123,13 @@ void atom():{Token value;}{
 
 
 	{jjtThis.operators = new Vector<Integer>();jjtThis.negative=false;}
-	[<OP_DIFF>{jjtThis.negative = true;}|<OP_SUM>] 
+	[<OP_DIFF>{jjtThis.negative = true;}|<OP_SUM>]
 	(
-		(	
-			value=<NUM>{jjtThis.operators.add(constants.NUM);} | 
-			value=<VAR>{jjtThis.operators.add(constants.EQUAL);} 
+		(
+			value=<NUM>{jjtThis.operators.add(constants.NUM);} |
+			value=<VAR>{jjtThis.operators.add(constants.EQUAL);}
 		) {jjtThis.numVar =value.toString();}	|
 	 	<PAR_OPEN> SumExpr() <PAR_CLOSE>
 	 )
 
 }
-	

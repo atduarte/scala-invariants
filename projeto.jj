@@ -52,8 +52,10 @@ SKIP :
 TOKEN:
 {
           <VAR		 : "$"(["0"-"9"])+ >
-      	| <NUM		 :(["0"-"9"])*(".")?(["0"-"9"])+ >
-		| <OR		 :"||" >
+        | <VAR_TAG   : "var" >
+        | <VAR_LOCAL : (["a"-"z"]|["A"-"Z"])+(["a"-"z"]|["A"-"Z"]|["1"-"9"])*>
+      	| <NUM		 : (["0"-"9"])*(".")?(["0"-"9"])+ >
+		| <OR		 : "||" >
 		| <AND		 : "&&" >
 		| <REC_BRAC_O: "["  >
 		| <REC_BRAC_C: "]"  >
@@ -79,6 +81,7 @@ SimpleNode Inv_exp():{/*@bgen(jjtree) Inv_exp */
 /*@egen*/}{/*@bgen(jjtree) Inv_exp */
         try {
 /*@egen*/
+	( VarDecl() )*
 	OrExpr() "\n"/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
@@ -169,12 +172,11 @@ void atomInv():{/*@bgen(jjtree) atomInv */
                 SimpleNode jjtn000 = new SimpleNode(JJTATOMINV);
                 boolean jjtc000 = true;
                 jjtree.openNodeScope(jjtn000);
-/*@egen*/Token t;}{/*@bgen(jjtree) atomInv */
+/*@egen*/Token value;}{/*@bgen(jjtree) atomInv */
         try {
 /*@egen*/
 	{jjtn000.operators = new Vector<Integer>();}
-
-	<VAR> (<EQUAL>{jjtn000.operators.add(constants.EQUAL);}|<NOTEQUAL>{jjtn000.operators.add(constants.NOTEQUAL);}) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>/*@bgen(jjtree)*/
+	value=<VAR>{jjtn000.numVar =value.toString();} (<EQUAL>{jjtn000.operators.add(constants.EQUAL);}|<NOTEQUAL>{jjtn000.operators.add(constants.NOTEQUAL);}) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>/*@bgen(jjtree)*/
         } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -268,6 +270,40 @@ void Set():{/*@bgen(jjtree) Set */
         }
 /*@egen*/
 }
+
+void VarDecl():{/*@bgen(jjtree) VarDecl */
+  SimpleNode jjtn000 = new SimpleNode(JJTVARDECL);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}{/*@bgen(jjtree) VarDecl */
+        try {
+/*@egen*/
+	<VAR_TAG> <VAR_LOCAL> <EQUAL> Aritm()/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
+
+
+
 
 
 void Aritm():{/*@bgen(jjtree) Aritm */
@@ -371,14 +407,20 @@ void atom():{/*@bgen(jjtree) atom */
 
 
 
-	{jjtn000.operators = new Vector<Integer>();negative=false;}
-
-	(value=<NUM>{jjtn000.operators.add(constants.NUM);} | value=<VAR>{jjtn000.operators.add(constants.EQUAL);} )/*@bgen(jjtree)*/
-                                                                                                                     {
-                                                                                                                       jjtree.closeNodeScope(jjtn000, true);
-                                                                                                                       jjtc000 = false;
-                                                                                                                     }
-/*@egen*/ {jjtn000.numVar =value.toString();}| <PAR_OPEN> SumExpr() <PAR_CLOSE>/*@bgen(jjtree)*/
+	{jjtn000.operators = new Vector<Integer>();jjtn000.negative=false;}
+	[<OP_DIFF>{jjtn000.negative = true;}|<OP_SUM>]
+	(
+		(
+			value=<NUM>{jjtn000.operators.add(constants.NUM);} |
+			value=<VAR>{jjtn000.operators.add(constants.EQUAL);}
+		)/*@bgen(jjtree)*/
+                  {
+                    jjtree.closeNodeScope(jjtn000, true);
+                    jjtc000 = false;
+                  }
+/*@egen*/ {jjtn000.numVar =value.toString();}	|
+	 	<PAR_OPEN> SumExpr() <PAR_CLOSE>
+	 )/*@bgen(jjtree)*/
         } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);

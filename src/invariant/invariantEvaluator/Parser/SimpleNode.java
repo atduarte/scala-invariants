@@ -13,12 +13,13 @@ class SimpleNode implements Node {
   protected Object value;
   protected InvariantParser parser;
 
-    public Vector<Integer> operators;
-    public String numVar;
-    public boolean negative;
-    public int getID() throws ParseException{
-        return id;
-    }
+public Vector<Integer> operators;
+public String numVar;
+public boolean negative;
+public int getID() throws ParseException{
+    return id;
+}
+
   public SimpleNode(int i) {
     id = i;
   }
