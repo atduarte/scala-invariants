@@ -9,11 +9,11 @@ object Main {
     var e : InvariantDouble = new InvariantDouble(2);
     var i : InvariantDouble = new InvariantDouble(3);
     i.restrict(
-        "var a = $1 " +
-        "var b = 3" +
-        "var c = 4.5" +
-        "var d = (12)" +
-        "($0 = [2^2-2,10] )",a,b,c,d,e);
+        "var a = d;" +
+        "var b = 3;" +
+        "var c = 4;" +
+        "var d = (12);" +
+        "($0 = [a,10] )",a,b,c,d,e);
 
   println (i.evaluator.evaluate());
   //  i is 0;
