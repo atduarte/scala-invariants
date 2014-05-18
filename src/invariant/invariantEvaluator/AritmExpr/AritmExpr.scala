@@ -27,7 +27,6 @@ class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant]) {
       }
     }
     var result = stack.pop();
-    println(result);
     return result;
   }
 

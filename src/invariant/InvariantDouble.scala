@@ -21,7 +21,7 @@ class InvariantDouble(startValue:Double) extends Invariant {
       val oldValue = value;
       value = arg;
       println(evaluator.evaluate())
-      if (!evaluator.evaluate()){  value = oldValue;}
+      if (!evaluator.evaluate()){  value = oldValue; }
     }
 
 		def +(arg:InvariantDouble) :  Double={return arg.value + value;}

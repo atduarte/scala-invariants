@@ -9,12 +9,13 @@ object Main {
     var e : InvariantDouble = new InvariantDouble(2);
     var i : InvariantDouble = new InvariantDouble(4.5);
     i.restrict(
-      "($0 != [0,10] )",a,b,c,d,e);
-    println(i.evaluator.evaluate());
+      "($0 = [0,10] )",a,b,c,d,e);
 
-    i is 2;
-    i is 3;
-    i is 10;
+
+    i is c+2;
+    i is i+1;
+    i is i+1;
+    println(i.value);
 
   }
 }
