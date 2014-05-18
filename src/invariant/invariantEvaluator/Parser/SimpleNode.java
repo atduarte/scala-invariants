@@ -18,7 +18,6 @@ class SimpleNode implements Node {
     public int getID() throws ParseException{
         return id;
     }
-
   public SimpleNode(int i) {
     id = i;
   }

@@ -18,6 +18,8 @@ class AritmAtomOperator(name:Int) extends AritmAtom {
     {return val1.evaluate * val2.evaluate;}
     else if (name == InvariantParserConstants.OP_DIV)
     {return val1.evaluate / val2.evaluate;}
+    else if (name == InvariantParserConstants.OP_EXP)
+    {return Math.pow(val1.evaluate,val2.evaluate);}
     return 0;
   }
   def evaluate(val1:Double,val2:Double):Double={
@@ -29,6 +31,8 @@ class AritmAtomOperator(name:Int) extends AritmAtom {
     {return val1 * val2;}
     else if (name == InvariantParserConstants.OP_DIV)
     {return val1 / val2;}
+    else if (name == InvariantParserConstants.OP_EXP)
+    {return Math.pow(val1,val2);}
     return 0;
   }
 }

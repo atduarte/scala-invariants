@@ -56,13 +56,15 @@ public interface InvariantParserConstants {
   /** RegularExpression Id. */
   int INF = 19;
   /** RegularExpression Id. */
-  int OP_SUM = 20;
+  int OP_EXP = 20;
   /** RegularExpression Id. */
-  int OP_DIFF = 21;
+  int OP_SUM = 21;
   /** RegularExpression Id. */
-  int OP_MUL = 22;
+  int OP_DIFF = 22;
   /** RegularExpression Id. */
-  int OP_DIV = 23;
+  int OP_MUL = 23;
+  /** RegularExpression Id. */
+  int OP_DIV = 24;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -89,6 +91,7 @@ public interface InvariantParserConstants {
     "\"=\"",
     "\"!=\"",
     "\"@inf\"",
+    "\"^\"",
     "\"+\"",
     "\"-\"",
     "\"*\"",

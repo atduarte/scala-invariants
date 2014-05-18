@@ -6,10 +6,12 @@ import invariant.invariantEvaluator.Parser.{InvariantParserConstants, InvariantP
 import java.util.Vector
 import java.util
 import invariant.Invariant
+import scala.collection.mutable.HashMap
+import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
 ;
 
 
-class BoolExpr(rootNode:SimpleNode,variables:Array[Invariant]) extends InvariantParserConstants{
+class BoolExpr(rootNode:SimpleNode,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) extends InvariantParserConstants{
   var currentNode: SimpleNode = rootNode;
 
   var expr: Vector[BoolAtom] = new Vector[BoolAtom]();
@@ -84,7 +86,7 @@ class BoolExpr(rootNode:SimpleNode,variables:Array[Invariant]) extends Invariant
       if (node.operators.get(0)== InvariantParserConstants.NOTEQUAL){
          negate = true;
       }
-      expr.add(new BoolAtomValue(node.numVar,negate, node.jjtGetChild(0).asInstanceOf[SimpleNode], variables));
+      expr.add(new BoolAtomValue(node.numVar,negate, node.jjtGetChild(0).asInstanceOf[SimpleNode], variables,macros));
     }
     else {
       moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);

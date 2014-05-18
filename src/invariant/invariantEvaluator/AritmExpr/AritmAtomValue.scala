@@ -2,18 +2,22 @@ package invariant.invariantEvaluator.AritmExpr
 
 import invariant.invariantEvaluator.Parser.{InvariantParserTokenManager, InvariantParserTreeConstants,InvariantParserConstants}
 import invariant.Invariant
+import scala.collection.mutable.HashMap
+import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
 
 
-class AritmAtomValue(strValue:String,dataType:Int,variables:Array[Invariant]) extends AritmAtom{
+class AritmAtomValue(strValue:String,dataType:Int,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) extends AritmAtom{
   var value:Double=0;
+  var key:String=null;
   if (dataType == InvariantParserConstants.VAR){}
   if (dataType == InvariantParserConstants.NUM){value = strValue.toDouble;}
+  if (dataType == InvariantParserConstants.VAR_LOCAL){key = strValue;}
 
   def getType(): Int={return VAL;}
 
   def evaluate:Double={
      if( dataType == InvariantParserConstants.NUM){return value};
-     println("Aqui:"+(variables(strValue.replace("$","").toInt)).value);
+     if( dataType == InvariantParserConstants.VAR_LOCAL){return (macros.get(key).get.evaluate)}
      return (variables(strValue.replace("$","").toInt)).value
   }
 

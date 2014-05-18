@@ -3,13 +3,17 @@ import invariant.invariantEvaluator.Parser.{InvariantParserConstants, InvariantP
 import java.util.Vector
 import java.util.Stack
 import invariant.Invariant
+import scala.collection.mutable.HashMap
+import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
 ;
 
-class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant]) {
+class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) {
 
   var currentNode:SimpleNode = rootNode;
-//  getAritm()
+
   var expr = new Vector[AritmAtom]();
+
+
   moveDown(currentNode)
 
 
@@ -20,7 +24,7 @@ class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant]) {
       if ( expr.elementAt(i).isInstanceOf[AritmAtomOperator]){
         val second = stack.pop;
         val first  = stack.pop;
-        stack push expr.elementAt(i).asInstanceOf[AritmAtomOperator].evaluate(second,first);
+        stack push expr.elementAt(i).asInstanceOf[AritmAtomOperator].evaluate(first,second);
       }
       else {
         stack.push(expr.elementAt(i).asInstanceOf[AritmAtomValue].evaluate);
@@ -44,6 +48,7 @@ class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant]) {
   def moveDownAritmExpr(node:SimpleNode){
     if (node.jjtGetNumChildren() == 1){moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);}
   }
+
   def moveDownSumExpr(node: SimpleNode) {
     if (node.jjtGetNumChildren() == 0) {/*Erro*/}
     moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode])
@@ -79,7 +84,6 @@ class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant]) {
     }
   }
 
-
   def moveDownAtomExpr(node:SimpleNode){
     if (node.jjtGetNumChildren() > 1 ){/*ERRO ARVORE INVALIDA*/}
 
@@ -89,13 +93,13 @@ class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant]) {
 
     if (node.jjtGetNumChildren() == 1 &&  node.negative) {
       moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);
-      expr.add(new AritmAtomValue("-1",InvariantParserConstants.NUM,variables));
+      expr.add(new AritmAtomValue("-1",InvariantParserConstants.NUM,variables,macros));
       expr.add(new AritmAtomOperator(InvariantParserConstants.OP_MUL))
 
     }
-    expr.add(new AritmAtomValue(node.numVar,node.operators.elementAt(0),variables)) ;
+    expr.add(new AritmAtomValue(node.numVar,node.operators.elementAt(0),variables,macros)) ;
     if ( node.negative){
-      expr.add(new AritmAtomValue("-1",InvariantParserConstants.NUM,variables));
+      expr.add(new AritmAtomValue("-1",InvariantParserConstants.NUM,variables,macros));
       expr.add(new AritmAtomOperator(InvariantParserConstants.OP_MUL))
     }
   }

@@ -4,8 +4,10 @@ import invariant.invariantEvaluator.Parser.{InvariantParserConstants, InvariantP
 import java.util.Vector
 import invariant.invariantEvaluator.AritmExpr.AritmExpr
 import invariant.Invariant
+import scala.collection.mutable.HashMap
+import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
 
-class RangeOrSet(rootNode:SimpleNode,variables:Array[Invariant]) extends InvariantParserConstants with InvariantParserTreeConstants {
+class RangeOrSet(rootNode:SimpleNode,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) extends InvariantParserConstants with InvariantParserTreeConstants {
 
   var currentNode : SimpleNode = rootNode
 
@@ -14,7 +16,7 @@ class RangeOrSet(rootNode:SimpleNode,variables:Array[Invariant]) extends Invaria
 
   var aritms:Vector[AritmExpr] = new Vector[AritmExpr](0);
   for (i <- 0 to currentNode.jjtGetNumChildren()-1) {
-    aritms.add(new AritmExpr(currentNode.jjtGetChild(i).asInstanceOf[SimpleNode],variables));
+    aritms.add(new AritmExpr(currentNode.jjtGetChild(i).asInstanceOf[SimpleNode],variables,macros));
   }
 
 
