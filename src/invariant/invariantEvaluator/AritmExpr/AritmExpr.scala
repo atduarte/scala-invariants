@@ -1,23 +1,17 @@
 package invariant.invariantEvaluator.AritmExpr
 import invariant.invariantEvaluator.Parser.{InvariantParserConstants, InvariantParserTreeConstants, SimpleNode}
 import java.util.Vector
-import java.util.Stack;
+import java.util.Stack
+import invariant.Invariant
+;
 
-/**
- * Created by Papa Formigas on 25-04-2014.
- */
-class AritmExpr(rootNode:SimpleNode) {
+class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant]) {
 
   var currentNode:SimpleNode = rootNode;
 //  getAritm()
-  var expr = moveDown(currentNode);
-  println("Valor calculado:"+evaluate());
+  var expr = new Vector[AritmAtom]();
+  moveDown(currentNode)
 
-  def getAritm(){
-    while(currentNode.getID != InvariantParserTreeConstants.JJTARITM){
-      currentNode = currentNode.jjtGetChild(0).asInstanceOf[SimpleNode];
-    }
-  }
 
   def evaluate():Double={
     var stack:Stack[Double]=new Stack[Double];
@@ -26,55 +20,68 @@ class AritmExpr(rootNode:SimpleNode) {
       if ( expr.elementAt(i).isInstanceOf[AritmAtomOperator]){
         val second = stack.pop;
         val first  = stack.pop;
-        stack push expr.elementAt(i).asInstanceOf[AritmAtomOperator].evaluate(first,second);
+        stack push expr.elementAt(i).asInstanceOf[AritmAtomOperator].evaluate(second,first);
       }
       else {
         stack.push(expr.elementAt(i).asInstanceOf[AritmAtomValue].evaluate);
       }
     }
-    return stack.pop()
+    var result = stack.pop();
+    println(result);
+    return result;
   }
 
-  def moveDown(node:SimpleNode):Vector[AritmAtom]={
+  def moveDown(node:SimpleNode){
 
-    if      ( node.getID == InvariantParserTreeConstants.JJTMULTEXPR){return moveDownSumOrMult(node);}
-    else if ( node.getID == InvariantParserTreeConstants.JJTSUMEXPR ){return moveDownSumOrMult(node);}
-    else if ( node.getID == InvariantParserTreeConstants.JJTATOM    ){return moveDownAtom(node);}
-    else if ( node.getID == InvariantParserTreeConstants.JJTARITM   ){return moveDownAritm(node);}
+    if      ( node.getID == InvariantParserTreeConstants.JJTMULTEXPR ){moveDownMultExpr(node);}
+    else if ( node.getID == InvariantParserTreeConstants.JJTMULTEXPR_){moveDownMult_Expr(node);}
+    else if ( node.getID == InvariantParserTreeConstants.JJTSUMEXPR  ){moveDownSumExpr(node);}
+    else if ( node.getID == InvariantParserTreeConstants.JJTSUMEXPR_ ){moveDownSum_Expr(node);}
+    else if ( node.getID == InvariantParserTreeConstants.JJTATOM     ){moveDownAtomExpr(node);}
+    else if ( node.getID == InvariantParserTreeConstants.JJTARITM    ){moveDownAritmExpr(node);}
 
-    return null;
   }
 
-  def moveDownAritm(node:SimpleNode):Vector[AritmAtom]={
-    //if (node.jjtGetNumChildren() == 0){return null;/*INFINITY*/}
-    if (node.jjtGetNumChildren() == 1){return moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);}
-
-    return null;
+  def moveDownAritmExpr(node:SimpleNode){
+    if (node.jjtGetNumChildren() == 1){moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);}
   }
-
-  def moveDownSumOrMult(node:SimpleNode):Vector[AritmAtom]={
-
-    if (node.jjtGetNumChildren() == 0){/*ERRO ARVORE INVALIDA*/}
-    if (node.jjtGetNumChildren() == 1){return moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);}
-
-    var expr:Vector[AritmAtom]=new Vector[AritmAtom](0);
-    expr = new Vector[AritmAtom];
-    var opCtr:Int = -1;
-
-    for (i <- 0 to node.jjtGetNumChildren()-1){
-      expr addAll moveDown(node.jjtGetChild(i).asInstanceOf[SimpleNode]);
-      opCtr+=1;
-      if ( opCtr % 2 == 1){
-        expr add new AritmAtomOperator(node.operators.get(opCtr/2) );
-      }
+  def moveDownSumExpr(node: SimpleNode) {
+    if (node.jjtGetNumChildren() == 0) {/*Erro*/}
+    moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode])
+    if ( node.jjtGetNumChildren() == 2) {
+      moveDown(node.jjtGetChild(1).asInstanceOf[SimpleNode])
     }
-    if ( opCtr % 2 == 0) {expr add new AritmAtomOperator(node.operators.lastElement());}
+  }
+  def moveDownSum_Expr(node: SimpleNode) {
+    if (node.jjtGetNumChildren() == 0) {/*Erro*/}
 
-    return  expr;
-
+    moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode])
+    expr.add(new AritmAtomOperator(node.operators.get(0)));
+    if (node.jjtGetNumChildren() > 1){
+      moveDown(node.jjtGetChild(1).asInstanceOf[SimpleNode])
+    }
   }
 
-  def moveDownAtom(node:SimpleNode):Vector[AritmAtom]={
+  def moveDownMultExpr(node: SimpleNode) {
+    if (node.jjtGetNumChildren() == 0) {/*Erro*/}
+
+    moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode])
+    if (node.jjtGetNumChildren() > 1 ) {
+      moveDown(node.jjtGetChild(1).asInstanceOf[SimpleNode])
+    }
+  }
+  def moveDownMult_Expr(node: SimpleNode) {
+    if (node.jjtGetNumChildren() == 0) {/*Erro*/}
+
+    moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode])
+    expr.add(new AritmAtomOperator(node.operators.get(0)));
+    if (node.jjtGetNumChildren() > 1){
+      moveDown(node.jjtGetChild(1).asInstanceOf[SimpleNode])
+    }
+  }
+
+
+  def moveDownAtomExpr(node:SimpleNode){
     if (node.jjtGetNumChildren() > 1 ){/*ERRO ARVORE INVALIDA*/}
 
     if (node.jjtGetNumChildren() == 1 && !node.negative){
@@ -82,18 +89,15 @@ class AritmExpr(rootNode:SimpleNode) {
     }
 
     if (node.jjtGetNumChildren() == 1 &&  node.negative) {
-      val expr = moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);
-      expr.add(new AritmAtomValue("-1",InvariantParserConstants.NUM));
+      moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);
+      expr.add(new AritmAtomValue("-1",InvariantParserConstants.NUM,variables));
       expr.add(new AritmAtomOperator(InvariantParserConstants.OP_MUL))
-      return expr;
-    }
 
-    val expr:Vector[AritmAtom] = new Vector[AritmAtom];
-    expr.add(new AritmAtomValue(node.numVar,node.operators.elementAt(0))) ;
+    }
+    expr.add(new AritmAtomValue(node.numVar,node.operators.elementAt(0),variables)) ;
     if ( node.negative){
-      expr.add(new AritmAtomValue("-1",InvariantParserConstants.NUM));
+      expr.add(new AritmAtomValue("-1",InvariantParserConstants.NUM,variables));
       expr.add(new AritmAtomOperator(InvariantParserConstants.OP_MUL))
     }
-    return expr;
   }
 }

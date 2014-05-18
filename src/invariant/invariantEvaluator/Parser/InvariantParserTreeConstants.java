@@ -5,29 +5,37 @@ public interface InvariantParserTreeConstants
 {
   public int JJTINV_EXP = 0;
   public int JJTOREXPR = 1;
-  public int JJTANDEXPR = 2;
-  public int JJTATOMINV = 3;
-  public int JJTRANGE = 4;
-  public int JJTSET = 5;
-  public int JJTVARDECL = 6;
-  public int JJTARITM = 7;
-  public int JJTSUMEXPR = 8;
-  public int JJTMULTEXPR = 9;
-  public int JJTATOM = 10;
+  public int JJTOREXPR_ = 2;
+  public int JJTANDEXPR = 3;
+  public int JJTANDEXPR_ = 4;
+  public int JJTATOMINV = 5;
+  public int JJTRANGE = 6;
+  public int JJTSET = 7;
+  public int JJTVARDECL = 8;
+  public int JJTARITM = 9;
+  public int JJTSUMEXPR = 10;
+  public int JJTSUMEXPR_ = 11;
+  public int JJTMULTEXPR = 12;
+  public int JJTMULTEXPR_ = 13;
+  public int JJTATOM = 14;
 
 
   public String[] jjtNodeName = {
     "Inv_exp",
     "OrExpr",
+    "OrExpr_",
     "AndExpr",
+    "AndExpr_",
     "atomInv",
     "Range",
     "Set",
     "VarDecl",
     "Aritm",
     "SumExpr",
+    "SumExpr_",
     "multExpr",
+    "multExpr_",
     "atom",
   };
 }
-/* JavaCC - OriginalChecksum=450402bc6bd3ccb0e943d4c8b9fbc876 (do not edit this line) */
+/* JavaCC - OriginalChecksum=fe61bbbb85a9fc76d72595c3b033000e (do not edit this line) */

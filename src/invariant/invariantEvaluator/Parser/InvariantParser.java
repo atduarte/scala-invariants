@@ -81,18 +81,50 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
   jjtree.openNodeScope(jjtn000);
     try {
       AndExpr();
-      label_2:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case OR:
-          ;
-          break;
-        default:
-          jj_la1[1] = jj_gen;
-          break label_2;
-        }
-        jj_consume_token(OR);
-        AndExpr();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case OR:
+        OrExpr_();
+        break;
+      default:
+        jj_la1[1] = jj_gen;
+        ;
+      }
+    } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            {if (true) throw (RuntimeException)jjte000;}
+          }
+          if (jjte000 instanceof ParseException) {
+            {if (true) throw (ParseException)jjte000;}
+          }
+          {if (true) throw (Error)jjte000;}
+    } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+  }
+
+  final public void OrExpr_() throws ParseException {
+                /*@bgen(jjtree) OrExpr_ */
+  SimpleNode jjtn000 = new SimpleNode(JJTOREXPR_);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+      jj_consume_token(OR);
+      AndExpr();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case OR:
+        OrExpr_();
+        break;
+      default:
+        jj_la1[2] = jj_gen;
+        ;
       }
     } catch (Throwable jjte000) {
           if (jjtc000) {
@@ -122,18 +154,50 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
   jjtree.openNodeScope(jjtn000);
     try {
       atomInv();
-      label_3:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case AND:
-          ;
-          break;
-        default:
-          jj_la1[2] = jj_gen;
-          break label_3;
-        }
-        jj_consume_token(AND);
-        atomInv();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case AND:
+        AndExpr_();
+        break;
+      default:
+        jj_la1[3] = jj_gen;
+        ;
+      }
+    } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            {if (true) throw (RuntimeException)jjte000;}
+          }
+          if (jjte000 instanceof ParseException) {
+            {if (true) throw (ParseException)jjte000;}
+          }
+          {if (true) throw (Error)jjte000;}
+    } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+  }
+
+  final public void AndExpr_() throws ParseException {
+                 /*@bgen(jjtree) AndExpr_ */
+  SimpleNode jjtn000 = new SimpleNode(JJTANDEXPR_);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+      jj_consume_token(AND);
+      atomInv();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case AND:
+        AndExpr_();
+        break;
+      default:
+        jj_la1[4] = jj_gen;
+        ;
       }
     } catch (Throwable jjte000) {
           if (jjtc000) {
@@ -177,7 +241,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
                                                                                                                     jjtn000.operators.add(constants.NOTEQUAL);
           break;
         default:
-          jj_la1[3] = jj_gen;
+          jj_la1[5] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -190,7 +254,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
           Range();
           break;
         default:
-          jj_la1[4] = jj_gen;
+          jj_la1[6] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -201,7 +265,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         jj_consume_token(PAR_CLOSE);
         break;
       default:
-        jj_la1[5] = jj_gen;
+        jj_la1[7] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -243,7 +307,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
                                                                                     jjtn000.operators.add(constants.REC_BRAC_C);
         break;
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[8] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -264,7 +328,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
                                                                                                                                                                                                                                  jjtn000.operators.add(constants.REC_BRAC_C);
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[9] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -297,15 +361,15 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     try {
       jj_consume_token(PAR_SETO);
       Aritm();
-      label_4:
+      label_2:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case COMMA:
           ;
           break;
         default:
-          jj_la1[8] = jj_gen;
-          break label_4;
+          jj_la1[10] = jj_gen;
+          break label_2;
         }
         jj_consume_token(COMMA);
         Aritm();
@@ -371,6 +435,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     try {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
+      case VAR_LOCAL:
       case NUM:
       case PAR_OPEN:
       case OP_SUM:
@@ -381,7 +446,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         jj_consume_token(INF);
         break;
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[11] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -412,34 +477,67 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-         jjtn000.operators = new Vector<Integer>();
       multExpr();
-      label_5:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case OP_SUM:
-        case OP_DIFF:
-          ;
-          break;
-        default:
-          jj_la1[10] = jj_gen;
-          break label_5;
-        }
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case OP_SUM:
-          jj_consume_token(OP_SUM);
-                               jjtn000.operators.add(constants.OP_SUM);
-          break;
-        case OP_DIFF:
-          jj_consume_token(OP_DIFF);
-                                                                                   jjtn000.operators.add(constants.OP_DIFF);
-          break;
-        default:
-          jj_la1[11] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        multExpr();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case OP_SUM:
+      case OP_DIFF:
+        SumExpr_();
+        break;
+      default:
+        jj_la1[12] = jj_gen;
+        ;
+      }
+    } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            {if (true) throw (RuntimeException)jjte000;}
+          }
+          if (jjte000 instanceof ParseException) {
+            {if (true) throw (ParseException)jjte000;}
+          }
+          {if (true) throw (Error)jjte000;}
+    } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+  }
+
+  final public void SumExpr_() throws ParseException {
+                 /*@bgen(jjtree) SumExpr_ */
+  SimpleNode jjtn000 = new SimpleNode(JJTSUMEXPR_);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+         jjtn000.operators = new Vector<Integer>();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case OP_SUM:
+        jj_consume_token(OP_SUM);
+                  jjtn000.operators.add(constants.OP_SUM);
+        break;
+      case OP_DIFF:
+        jj_consume_token(OP_DIFF);
+                                                                      jjtn000.operators.add(constants.OP_DIFF);
+        break;
+      default:
+        jj_la1[13] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      multExpr();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case OP_SUM:
+      case OP_DIFF:
+        SumExpr_();
+        break;
+      default:
+        jj_la1[14] = jj_gen;
+        ;
       }
     } catch (Throwable jjte000) {
           if (jjtc000) {
@@ -468,35 +566,59 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-         jjtn000.operators = new Vector<Integer>();
       atom();
-      label_6:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case OP_MUL:
-        case OP_DIV:
-          ;
-          break;
-        default:
-          jj_la1[12] = jj_gen;
-          break label_6;
-        }
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case OP_MUL:
-          jj_consume_token(OP_MUL);
-                                 jjtn000.operators.add(constants.OP_MUL);
-          break;
-        case OP_DIV:
-          jj_consume_token(OP_DIV);
-                                                                                                 jjtn000.operators.add(constants.OP_DIV);
-          break;
-        default:
-          jj_la1[13] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        atom();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case OP_MUL:
+      case OP_DIV:
+        multExpr_();
+        break;
+      default:
+        jj_la1[15] = jj_gen;
+        ;
       }
+    } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            {if (true) throw (RuntimeException)jjte000;}
+          }
+          if (jjte000 instanceof ParseException) {
+            {if (true) throw (ParseException)jjte000;}
+          }
+          {if (true) throw (Error)jjte000;}
+    } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+  }
+
+  final public void multExpr_() throws ParseException {
+                  /*@bgen(jjtree) multExpr_ */
+  SimpleNode jjtn000 = new SimpleNode(JJTMULTEXPR_);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+         jjtn000.operators = new Vector<Integer>();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case OP_MUL:
+        jj_consume_token(OP_MUL);
+                  jjtn000.operators.add(constants.OP_MUL);
+        break;
+      case OP_DIV:
+        jj_consume_token(OP_DIV);
+                                                                     jjtn000.operators.add(constants.OP_DIV);
+        break;
+      default:
+        jj_la1[16] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      atom();
     } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -525,41 +647,50 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
              jjtree.openNodeScope(jjtn000);Token value;
     try {
          jjtn000.operators = new Vector<Integer>();jjtn000.negative=false;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case OP_SUM:
-      case OP_DIFF:
+      label_3:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case OP_SUM:
+        case OP_DIFF:
+          ;
+          break;
+        default:
+          jj_la1[17] = jj_gen;
+          break label_3;
+        }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case OP_DIFF:
           jj_consume_token(OP_DIFF);
-                   jjtn000.negative = true;
+                    jjtn000.negative = !jjtn000.negative;
           break;
         case OP_SUM:
           jj_consume_token(OP_SUM);
           break;
         default:
-          jj_la1[14] = jj_gen;
+          jj_la1[18] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
-        break;
-      default:
-        jj_la1[15] = jj_gen;
-        ;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
+      case VAR_LOCAL:
       case NUM:
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case NUM:
           value = jj_consume_token(NUM);
-                                    jjtn000.operators.add(constants.NUM);
+                                                  jjtn000.operators.add(constants.NUM);
           break;
         case VAR:
           value = jj_consume_token(VAR);
-                                    jjtn000.operators.add(constants.EQUAL);
+                                                  jjtn000.operators.add(constants.VAR);
+          break;
+        case VAR_LOCAL:
+          value = jj_consume_token(VAR_LOCAL);
+                                          jjtn000.operators.add(constants.VAR_LOCAL);
           break;
         default:
-          jj_la1[16] = jj_gen;
+          jj_la1[19] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -573,7 +704,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         jj_consume_token(PAR_CLOSE);
         break;
       default:
-        jj_la1[17] = jj_gen;
+        jj_la1[20] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -607,13 +738,13 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[18];
+  final private int[] jj_la1 = new int[21];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x20,0x100,0x200,0x60000,0x4c00,0x1010,0xc00,0xc00,0x10000,0x381090,0x300000,0x300000,0xc00000,0xc00000,0x300000,0x300000,0x90,0x1090,};
+      jj_la1_0 = new int[] {0x20,0x100,0x100,0x200,0x200,0x60000,0x4c00,0x1010,0xc00,0xc00,0x10000,0x3810d0,0x300000,0x300000,0x300000,0xc00000,0xc00000,0x300000,0x300000,0xd0,0x10d0,};
    }
 
   /** Constructor with InputStream. */
@@ -627,7 +758,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -642,7 +773,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -652,7 +783,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -663,7 +794,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -672,7 +803,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -682,7 +813,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -738,7 +869,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 18; i++) {
+    for (int i = 0; i < 21; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

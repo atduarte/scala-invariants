@@ -1,97 +1,82 @@
 package invariant
 
 import invariant.invariantEvaluator.InvariantEvaluator
-import java.util.Vector
 
-class InvariantDouble(startValue:Double) {
+class InvariantDouble(startValue:Double) extends Invariant {
 
-  var value:Double = startValue
-  var evaluator:InvariantEvaluator = null
+		var value = startValue;
+		var evaluator:InvariantEvaluator= null;
+    var variables:Array[Invariant]=null;
 
-  def restrict(restrictions : String) {
-    evaluator = new InvariantEvaluator(restrictions)
-  }
+    def restrict(rest:String,args:Invariant*){
+      variables = new Array[Invariant](args.size+1);
+      variables(0)=this;
+      for (i<-0 to args.size-1){
+        variables(i+1) = args(i);
+      }
+      evaluator = new InvariantEvaluator(rest,variables);
 
-  def is(newValue:Double) {
-    if (evaluator != null && this.verify(newValue)) {
-      println("Verified")
-      value = newValue
-    } else {
-      println("Failed")
-      // Exception
     }
-  }
+    def is (arg:Double){
+      val oldValue = value;
+      value = arg;
+      println(evaluator.evaluate())
+      if (!evaluator.evaluate()){  value = oldValue;}
+    }
 
-  def verify(newValue:Double) : Boolean = {
-    evaluator.evaluate(newValue)
-    true
-  }
+		def +(arg:InvariantDouble) :  Double={return arg.value + value;}
+		def +(arg:Double) 	       :  Double={return value + arg;}
+		def +(arg:Int) 		         :  Double={return value + arg;}
+		def +(arg:Float)           :  Double={return value + arg;}
 
+		def -(arg:InvariantDouble) : Double={return arg.value - value;}
+		def -(arg:Double) 	       : Double={return value - arg;}
+		def -(arg:Int) 		         : Double={return value - arg;}
+		def -(arg:Float) 	         : Double={return value - arg;}
 
-  def +(arg:InvariantInt)    : InvariantDouble={return new InvariantDouble(arg.value + value);}
-  def +(arg:InvariantDouble) : InvariantDouble={return new InvariantDouble(arg.value + value);}
-  def +(arg:Double) 	:  InvariantDouble={return new InvariantDouble(value + arg);}
-  def +(arg:Int) 		:  InvariantDouble={return new InvariantDouble(value + arg);}
-  def +(arg:Float) 	:  InvariantDouble={return new InvariantDouble(value + arg);}
+		def *(arg:InvariantDouble) : Double={return arg.value * value;}
+		def *(arg:Double) 	       : Double={return value * arg;}
+		def *(arg:Int) 		         : Double={return value * arg;}
+		def *(arg:Float) 	         : Double={return value * arg;}
 
-  def -(arg:InvariantInt)    : InvariantDouble={return new InvariantDouble(arg.value - value);}
-  def -(arg:InvariantDouble) : InvariantDouble={return new InvariantDouble(arg.value - value);}
-  def -(arg:Double) 	:  InvariantDouble={return new InvariantDouble(value - arg);}
-  def -(arg:Int) 		:  InvariantDouble={return new InvariantDouble(value - arg);}
-  def -(arg:Float) 	:  InvariantDouble={return new InvariantDouble(value - arg);}
+		def /(arg:InvariantDouble) : Double={return arg.value / value;}
+		def /(arg:Double) 	       : Double={return value / arg;}
+		def /(arg:Int) 		         : Double={return value / arg;}
+		def /(arg:Float) 	         : Double={return value / arg;}
 
-  def *(arg:InvariantInt)    : InvariantDouble={return new InvariantDouble(arg.value * value);}
-  def *(arg:InvariantDouble) : InvariantDouble={return new InvariantDouble(arg.value * value);}
-  def *(arg:Double) 	:  InvariantDouble={return new InvariantDouble(value * arg);}
-  def *(arg:Int) 		:  InvariantDouble={return new InvariantDouble(value * arg);}
-  def *(arg:Float) 	:  InvariantDouble={return new InvariantDouble(value * arg);}
+		def %(arg:InvariantDouble) : Double={return arg.value % value;}
+		def %(arg:Double) 	       : Double={return value % arg;}
+		def %(arg:Int) 		         : Double={return value % arg;}
+		def %(arg:Float) 	         : Double={return value % arg;}
 
-  def /(arg:InvariantInt)    : InvariantDouble={return new InvariantDouble(arg.value / value);}
-  def /(arg:InvariantDouble) : InvariantDouble={return new InvariantDouble(arg.value / value);}
-  def /(arg:Double) 	:  InvariantDouble={return new InvariantDouble(value / arg);}
-  def /(arg:Int) 		:  InvariantDouble={return new InvariantDouble(value / arg);}
-  def /(arg:Float) 	:  InvariantDouble={return new InvariantDouble(value / arg);}
+		def !=(arg:InvariantDouble):  Boolean={return value != arg.value;}
+		def !=(arg:Double) 	       :  Boolean={return value != arg;}
+		def !=(arg:Int) 	         :  Boolean={return value != arg;}
+		def !=(arg:Float) 	       :  Boolean={return value != arg;}
 
-  def %(arg:InvariantInt)    : InvariantDouble={return new InvariantDouble(arg.value % value);}
-  def %(arg:InvariantDouble) : InvariantDouble={return new InvariantDouble(arg.value % value);}
-  def %(arg:Double) 	:  InvariantDouble={return new InvariantDouble(value % arg);}
-  def %(arg:Int) 		:  InvariantDouble={return new InvariantDouble(value % arg);}
-  def %(arg:Float) 	:  InvariantDouble={return new InvariantDouble(value % arg);}
+		def ==(arg:InvariantDouble):  Boolean={return value == arg.value;}
+		def ==(arg:Double) 	       :  Boolean={return value == arg;}
+		def ==(arg:Int) 	         :  Boolean={return value == arg;}
+		def ==(arg:Float) 	       :  Boolean={return value == arg;}
 
-  def !=(arg:InvariantInt) 	:  Boolean={return value != arg.value;}
-  def !=(arg:InvariantDouble) :  Boolean={return value != arg.value;}
-  def !=(arg:Double) 	:  Boolean={return value != arg;}
-  def !=(arg:Int) 	:  Boolean={return value != arg;}
-  def !=(arg:Float) 	:  Boolean={return value != arg;}
+		def <(arg:InvariantDouble) :  Boolean={return value < arg.value;}
+		def <(arg:Double) 	       :  Boolean={return value < arg;}
+		def <(arg:Int) 		         :  Boolean={return value < arg;}
+		def <(arg:Float) 	         :  Boolean={return value < arg;}
 
-  def ==(arg:InvariantInt) 	:  Boolean={return value == arg.value;}
-  def ==(arg:InvariantDouble) :  Boolean={return value == arg.value;}
-  def ==(arg:Double) 	:  Boolean={return value == arg;}
-  def ==(arg:Int) 	:  Boolean={return value == arg;}
-  def ==(arg:Float) 	:  Boolean={return value == arg;}
+		def <=(arg:InvariantDouble):  Boolean={return value <= arg.value;}
+		def <=(arg:Double)         :  Boolean={return value <= arg;}
+		def <=(arg:Int) 	         :  Boolean={return value <= arg;}
+		def <=(arg:Float) 	       :  Boolean={return value <= arg;}
 
-  def <(arg:InvariantInt)    :  Boolean={return value < arg.value;}
-  def <(arg:InvariantDouble) :  Boolean={return value < arg.value;}
-  def <(arg:Double) 	:  Boolean={return value < arg;}
-  def <(arg:Int) 		:  Boolean={return value < arg;}
-  def <(arg:Float) 	:  Boolean={return value < arg;}
+		def >(arg:InvariantDouble) :  Boolean={return value > arg.value;}
+		def >(arg:Double) 	       :  Boolean={return value > arg;}
+		def >(arg:Int) 		         :  Boolean={return value > arg;}
+		def >(arg:Float) 	         :  Boolean={return value > arg;}
 
-  def <=(arg:InvariantInt) 	:  Boolean={return value <= arg.value;}
-  def <=(arg:InvariantDouble) :  Boolean={return value <= arg.value;}
-  def <=(arg:Double) 	:  Boolean={return value <= arg;}
-  def <=(arg:Int) 	:  Boolean={return value <= arg;}
-  def <=(arg:Float) 	:  Boolean={return value <= arg;}
-
-  def >(arg:InvariantInt)    :  Boolean={return value > arg.value;}
-  def >(arg:InvariantDouble) :  Boolean={return value > arg.value;}
-  def >(arg:Double) 	:  Boolean={return value > arg;}
-  def >(arg:Int) 		:  Boolean={return value > arg;}
-  def >(arg:Float) 	:  Boolean={return value > arg;}
-
-  def >=(arg:InvariantInt) 	:  Boolean={return value >= arg.value;}
-  def >=(arg:InvariantDouble) :  Boolean={return value >= arg.value;}
-  def >=(arg:Double) 	:  Boolean={return value >= arg;}
-  def >=(arg:Int) 	:  Boolean={return value >= arg;}
-  def >=(arg:Float) 	:  Boolean={return value >= arg;}
-}
+		def >=(arg:InvariantDouble):  Boolean={return value >= arg.value;}
+		def >=(arg:Double) 	       :  Boolean={return value >= arg;}
+		def >=(arg:Int) 	         :  Boolean={return value >= arg;}
+		def >=(arg:Float) 	       :  Boolean={return value >= arg;}
+	}
 
