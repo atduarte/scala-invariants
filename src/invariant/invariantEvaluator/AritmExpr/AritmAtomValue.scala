@@ -4,6 +4,7 @@ import invariant.invariantEvaluator.Parser.{InvariantParserTokenManager, Invaria
 import invariant.Invariant
 import scala.collection.mutable.HashMap
 import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
+import invariant.invariantEvaluator.Exceptions.InvariantExceptionIllegalVariable
 
 
 class AritmAtomValue(strValue:String,dataType:Int,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) extends AritmAtom{
@@ -20,6 +21,9 @@ class AritmAtomValue(strValue:String,dataType:Int,variables:Array[Invariant],mac
      if( dataType == InvariantParserConstants.VAR_LOCAL){return (macros.get(key).get.evaluate)}
 
     var index = strValue.replace("$","").toInt;
+    if ( variables.length <= index){
+      throw new InvariantExceptionIllegalVariable(strValue,null);
+    }
     var value2 = variables(index).value
     return value2
   }

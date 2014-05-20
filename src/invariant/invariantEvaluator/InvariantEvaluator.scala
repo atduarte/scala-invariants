@@ -6,8 +6,7 @@ import invariant.invariantEvaluator.BoolExpr.BoolExpr
 import invariant.Invariant
 import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
 import scala.collection.mutable.HashMap
-import java.util
-import invariant.invariantEvaluator.Exceptions.InvariantExceptionSyntax
+import invariant.invariantEvaluator.Exceptions.{InvariantExceptionIllegalVariable, InvariantExceptionSyntax, InvariantExceptionIllegalMacro}
 
 
 class InvariantEvaluator(expression : String,variables:Array[Invariant]){
@@ -24,12 +23,25 @@ class InvariantEvaluator(expression : String,variables:Array[Invariant]){
   var macros:HashMap[String,VarDecExpr]=new HashMap[String,VarDecExpr];
 
   for (i<-0 to tree.jjtGetNumChildren()-2){
-    var temp = new VarDecExpr(tree.jjtGetChild(i).asInstanceOf[SimpleNode],variables,macros);
-    macros.put(temp.variable,temp);
+    try{
+      var temp = new VarDecExpr(tree.jjtGetChild(i).asInstanceOf[SimpleNode],variables,macros);
+      macros.put(temp.variable,temp);
+    }
+    catch{
+      case e:java.util.NoSuchElementException => throw new InvariantExceptionIllegalMacro(tree.jjtGetChild(i).asInstanceOf[SimpleNode].numVar,expr);
+      case e:InvariantExceptionIllegalVariable => e.expr=expr;throw e;
+    }
   }
   var nexpr:BoolExpr = new BoolExpr(tree.jjtGetChild(tree.jjtGetNumChildren()-1).asInstanceOf[SimpleNode],variables,macros)
+  try {
+    nexpr.evaluate()
+  }catch {
+    case e:InvariantExceptionIllegalVariable => e.expr=expr;throw e;
+  }
+
 
   def evaluate():Boolean={
-    return nexpr.evaluate();
+      return nexpr.evaluate();
   }
+
 }

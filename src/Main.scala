@@ -8,8 +8,9 @@ object Main {
     /*Demos - 0-100*/
     var input: InvariantDouble = new InvariantDouble(1);
     input.restrict("" +
-      "var a=$0+$1;\n" +
-      "$0=[$0,a] \n" +
+      "var a=2+$1;\n" +
+      "var b=2+3;"+
+      "$0=[$0,a]\n" +
       "");
    // var scan: Scanner = new java.util.Scanner(System.in)
     //input.evaluator.evaluate();

@@ -9,7 +9,7 @@ import scala.collection.mutable.HashMap
 class VarDecExpr(node:SimpleNode,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) {
     var variable:String = node.numVar;
     var aritm:AritmExpr = new AritmExpr(node.jjtGetChild(0).asInstanceOf[SimpleNode],variables,macros);
-
+    aritm.evaluate();
     def evaluate:Double={
       aritm.evaluate();
     }
