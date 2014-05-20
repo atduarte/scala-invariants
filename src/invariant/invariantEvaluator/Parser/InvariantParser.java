@@ -48,7 +48,6 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         VarDecl();
       }
       OrExpr();
-      jj_consume_token(26);
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
          {if (true) return jjtn000;}
@@ -751,7 +750,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x20,0x100,0x100,0x200,0x200,0xc0000,0x4c00,0x1010,0xc00,0xc00,0x10000,0xd010d0,0xc00000,0xc00000,0xc00000,0x3200000,0x3200000,0xc00000,0xc00000,0xd0,0x10d0,};
+      jj_la1_0 = new int[] {0x40,0x200,0x200,0x400,0x400,0x180000,0x9800,0x2020,0x1800,0x1800,0x20000,0x1a021a0,0x1800000,0x1800000,0x1800000,0x6400000,0x6400000,0x1800000,0x1800000,0x1a0,0x21a0,};
    }
 
   /** Constructor with InputStream. */

@@ -42,7 +42,7 @@ PARSER_END(InvariantParser)
 
 SKIP :
 {
-	" " |  "\r" | "\t"
+	" " |  "\r" | "\t" | "\n"
 }
 
 TOKEN:
@@ -51,7 +51,7 @@ TOKEN:
         | <VAR_TAG   : "var" >
         | <VAR_LOCAL : (["a"-"z"]|["A"-"Z"])+(["a"-"z"]|["A"-"Z"]|["1"-"9"])*>
       	| <NUM		 : (["0"-"9"])*(".")?(["0"-"9"])+ >
-		| <OR		 : "||" >
+      	| <OR		 : "||" >
 		| <AND		 : "&&" >
 		| <REC_BRAC_O: "["  >
 		| <REC_BRAC_C: "]"  >
@@ -60,9 +60,11 @@ TOKEN:
 		| <PAR_SETO  : "{"  >
 		| <PAR_SETC  : "}"  >
 		| <COMMA     : ","  >
+		| <SEMMICOLON: ";"  >
 		| <EQUAL 	 : "="  >
 		| <NOTEQUAL  : "!=" >
 		| <INF       : "@inf">
+		| <OP_EXP    : "^">
 		| <OP_SUM    :  "+" >
 		| <OP_DIFF   :  "-" >
 		| <OP_MUL    :  "*" >
@@ -72,17 +74,24 @@ TOKEN:
 
 SimpleNode Inv_exp():{}{
 	( VarDecl() )*
-	OrExpr() "\n"
+	OrExpr() 
 	{return jjtThis;}
 }
 void OrExpr():{}{
-	AndExpr() ( <OR> AndExpr() )*
+	AndExpr() [OrExpr_()]
+}
+void OrExpr_():{}{
+	( <OR> AndExpr() ) [OrExpr_()]
 }
 void AndExpr():{}{
-	atomInv() ( <AND> atomInv() )*
+	atomInv() [AndExpr_()]
+}
+void AndExpr_():{}{
+	<AND> atomInv() [AndExpr_()]
 }
 void atomInv():{Token value;}{
 	{jjtThis.operators = new Vector<Integer>();}
+
 	value=<VAR>{jjtThis.numVar =value.toString();} (<EQUAL>{jjtThis.operators.add(constants.EQUAL);}|<NOTEQUAL>{jjtThis.operators.add(constants.NOTEQUAL);}) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>
 }
 
@@ -96,11 +105,9 @@ void Set():{}{
 	<PAR_SETO> Aritm() (","Aritm())* <PAR_SETC>
 }
 
-void VarDecl():{}{
-	<VAR_TAG> <VAR_LOCAL> <EQUAL> Aritm()
+void VarDecl():{Token value;}{
+	<VAR_TAG> value=<VAR_LOCAL>{jjtThis.numVar =value.toString();} <EQUAL> Aritm() <SEMMICOLON>
 }
-
-
 
 
 
@@ -109,27 +116,38 @@ void Aritm():{}{
 	SumExpr() | <INF>
 }
 void SumExpr():{}{
+	multExpr() [SumExpr_()]
+}
+void SumExpr_():{}{
 	{jjtThis.operators = new Vector<Integer>();}
-
-	multExpr() ( (<OP_SUM>{jjtThis.operators.add(constants.OP_SUM);}|<OP_DIFF>{jjtThis.operators.add(constants.OP_DIFF);})  multExpr() )*
+	(<OP_SUM>{jjtThis.operators.add(constants.OP_SUM);}|<OP_DIFF>{jjtThis.operators.add(constants.OP_DIFF);})  multExpr() [SumExpr_()]
 }
 void multExpr():{}{
+	atom() [multExpr_()]
+}
+void multExpr_():{}{	
 	{jjtThis.operators = new Vector<Integer>();}
-
-	atom() ( (	<OP_MUL>{jjtThis.operators.add(constants.OP_MUL);}	|	<OP_DIV>{jjtThis.operators.add(constants.OP_DIV);}	) atom() )*
+	(<OP_MUL>{jjtThis.operators.add(constants.OP_MUL);}|
+     <OP_DIV>{jjtThis.operators.add(constants.OP_DIV);}|
+     <OP_EXP>{jjtThis.operators.add(constants.OP_EXP);
+     }	) atom()
 }
 void atom():{Token value;}{
 
-
-
 	{jjtThis.operators = new Vector<Integer>();jjtThis.negative=false;}
-	[<OP_DIFF>{jjtThis.negative = true;}|<OP_SUM>]
+	((<OP_DIFF>{jjtThis.negative = !jjtThis.negative;}|<OP_SUM>))* 
 	(
-		(
-			value=<NUM>{jjtThis.operators.add(constants.NUM);} |
-			value=<VAR>{jjtThis.operators.add(constants.EQUAL);}
+		(	
+			value=<NUM>		 {jjtThis.operators.add(constants.NUM);} | 
+			value=<VAR>		 {jjtThis.operators.add(constants.VAR);} |
+			value=<VAR_LOCAL>{jjtThis.operators.add(constants.VAR_LOCAL);} 
 		) {jjtThis.numVar =value.toString();}	|
 	 	<PAR_OPEN> SumExpr() <PAR_CLOSE>
 	 )
+	
+	 
+
+
 
 }
+	

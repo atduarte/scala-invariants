@@ -15,6 +15,7 @@ class BoolAtomValue(strVar:String,neg:Boolean,ros:SimpleNode,variables:Array[Inv
   variableString=variableString.replace("$","");
   var variable = variables(variableString.toInt);
 
+
   def getType(): Int={return VAL;}
 
   def evaluate:Boolean={

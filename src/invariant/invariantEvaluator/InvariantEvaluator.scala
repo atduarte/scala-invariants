@@ -1,18 +1,26 @@
 package invariant.invariantEvaluator
 
-import invariant.invariantEvaluator.Parser.{SimpleNode, InvariantParser}
+import invariant.invariantEvaluator.Parser.{SimpleNode, InvariantParser,ParseException}
 import java.io.ByteArrayInputStream
 import invariant.invariantEvaluator.BoolExpr.BoolExpr
 import invariant.Invariant
 import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
 import scala.collection.mutable.HashMap
+import java.util
+import invariant.invariantEvaluator.Exceptions.InvariantExceptionSyntax
 
 
 class InvariantEvaluator(expression : String,variables:Array[Invariant]){
 
   var expr:String  = expression + "\n"
-	var parser:InvariantParser = new InvariantParser(new ByteArrayInputStream(expr.getBytes));
-  var tree:SimpleNode = parser.Inv_exp
+	var parser = new InvariantParser(new ByteArrayInputStream(expr.getBytes));
+  var tree:SimpleNode = null;
+  try {
+    tree = parser.Inv_exp
+  }catch{
+    case e:ParseException => throw new InvariantExceptionSyntax(expr,e.toString);
+  }
+
   var macros:HashMap[String,VarDecExpr]=new HashMap[String,VarDecExpr];
 
   for (i<-0 to tree.jjtGetNumChildren()-2){

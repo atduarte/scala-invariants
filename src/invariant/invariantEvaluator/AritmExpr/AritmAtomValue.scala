@@ -18,7 +18,10 @@ class AritmAtomValue(strValue:String,dataType:Int,variables:Array[Invariant],mac
   def evaluate:Double={
      if( dataType == InvariantParserConstants.NUM){return value};
      if( dataType == InvariantParserConstants.VAR_LOCAL){return (macros.get(key).get.evaluate)}
-     return (variables(strValue.replace("$","").toInt)).value
+
+    var index = strValue.replace("$","").toInt;
+    var value2 = variables(index).value
+    return value2
   }
 
 

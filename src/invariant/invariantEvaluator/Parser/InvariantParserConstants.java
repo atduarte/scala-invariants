@@ -24,49 +24,49 @@ public interface InvariantParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int VAR = 4;
+  int VAR = 5;
   /** RegularExpression Id. */
-  int VAR_TAG = 5;
+  int VAR_TAG = 6;
   /** RegularExpression Id. */
-  int VAR_LOCAL = 6;
+  int VAR_LOCAL = 7;
   /** RegularExpression Id. */
-  int NUM = 7;
+  int NUM = 8;
   /** RegularExpression Id. */
-  int OR = 8;
+  int OR = 9;
   /** RegularExpression Id. */
-  int AND = 9;
+  int AND = 10;
   /** RegularExpression Id. */
-  int REC_BRAC_O = 10;
+  int REC_BRAC_O = 11;
   /** RegularExpression Id. */
-  int REC_BRAC_C = 11;
+  int REC_BRAC_C = 12;
   /** RegularExpression Id. */
-  int PAR_OPEN = 12;
+  int PAR_OPEN = 13;
   /** RegularExpression Id. */
-  int PAR_CLOSE = 13;
+  int PAR_CLOSE = 14;
   /** RegularExpression Id. */
-  int PAR_SETO = 14;
+  int PAR_SETO = 15;
   /** RegularExpression Id. */
-  int PAR_SETC = 15;
+  int PAR_SETC = 16;
   /** RegularExpression Id. */
-  int COMMA = 16;
+  int COMMA = 17;
   /** RegularExpression Id. */
-  int SEMMICOLON = 17;
+  int SEMMICOLON = 18;
   /** RegularExpression Id. */
-  int EQUAL = 18;
+  int EQUAL = 19;
   /** RegularExpression Id. */
-  int NOTEQUAL = 19;
+  int NOTEQUAL = 20;
   /** RegularExpression Id. */
-  int INF = 20;
+  int INF = 21;
   /** RegularExpression Id. */
-  int OP_EXP = 21;
+  int OP_EXP = 22;
   /** RegularExpression Id. */
-  int OP_SUM = 22;
+  int OP_SUM = 23;
   /** RegularExpression Id. */
-  int OP_DIFF = 23;
+  int OP_DIFF = 24;
   /** RegularExpression Id. */
-  int OP_MUL = 24;
+  int OP_MUL = 25;
   /** RegularExpression Id. */
-  int OP_DIV = 25;
+  int OP_DIV = 26;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -77,6 +77,7 @@ public interface InvariantParserConstants {
     "\" \"",
     "\"\\r\"",
     "\"\\t\"",
+    "\"\\n\"",
     "<VAR>",
     "\"var\"",
     "<VAR_LOCAL>",
@@ -99,7 +100,6 @@ public interface InvariantParserConstants {
     "\"-\"",
     "\"*\"",
     "\"/\"",
-    "\"\\n\"",
   };
 
 }

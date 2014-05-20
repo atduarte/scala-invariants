@@ -1,6 +1,7 @@
 package invariant
 
 import invariant.invariantEvaluator.InvariantEvaluator
+import invariant.invariantEvaluator.Exceptions.InvariantExceptionRestr
 
 class InvariantDouble(startValue:Double) extends Invariant {
 
@@ -20,8 +21,7 @@ class InvariantDouble(startValue:Double) extends Invariant {
     def is (arg:Double){
       val oldValue = value;
       value = arg;
-      println(evaluator.evaluate())
-      if (!evaluator.evaluate()){  value = oldValue; }
+      if (!evaluator.evaluate()){  value = oldValue; throw new InvariantExceptionRestr(evaluator.expr,value,arg); }
     }
 
 		def +(arg:InvariantDouble) :  Double={return arg.value + value;}
