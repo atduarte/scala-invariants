@@ -6,6 +6,7 @@
   public Vector<Integer> operators;
   public String numVar;
   public boolean negative;
+  public boolean localVar;
   public int getID() throws ParseException{
 	return id;
   }
@@ -481,4 +482,4 @@ public class SimpleCharStream
   }
 
 }
-/* JavaCC - OriginalChecksum=894226a32e8e5e73ab3988c5a7c3bb10 (do not edit this line) */
+/* JavaCC - OriginalChecksum=c55f6542c4101581f71f29b0332cd7df (do not edit this line) */

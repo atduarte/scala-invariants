@@ -10,14 +10,14 @@ import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
 class AritmExpr(rootNode:SimpleNode,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) {
 
   var currentNode:SimpleNode = rootNode;
-
+  var infinite:Boolean = true;
   var expr = new Vector[AritmAtom]();
-
-
-  moveDown(currentNode)
+  infinite = rootNode.jjtGetNumChildren() ==0;
+  if ( !infinite){moveDown(currentNode);}
 
 
   def evaluate():Double={
+    if ( infinite){throw new AritmInfiniteException();}
     var stack:Stack[Double]=new Stack[Double];
 
     for(i <- 0 to expr.size-1){

@@ -1,3 +1,4 @@
+
 options
 {
     LOOKAHEAD=1;
@@ -11,6 +12,7 @@ PARSER_BEGIN(InvariantParser)
   public Vector<Integer> operators;
   public String numVar;
   public boolean negative;
+  public boolean localVar;
   public int getID() throws ParseException{
 	return id;
   }
@@ -71,7 +73,6 @@ TOKEN:
 		| <OP_DIV    :  "/" >
 
 }
-
 SimpleNode Inv_exp():{}{
 	( VarDecl() )*
 	OrExpr() 
@@ -92,7 +93,11 @@ void AndExpr_():{}{
 void atomInv():{Token value;}{
 	{jjtThis.operators = new Vector<Integer>();}
 
-	value=<VAR>{jjtThis.numVar =value.toString();} (<EQUAL>{jjtThis.operators.add(constants.EQUAL);}|<NOTEQUAL>{jjtThis.operators.add(constants.NOTEQUAL);}) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>
+	(
+		value=<VAR>{jjtThis.numVar =value.toString();} |
+		value=<VAR_LOCAL>{jjtThis.numVar =value.toString();jjtThis.localVar=true;}
+	) 
+	 (<EQUAL>{jjtThis.operators.add(constants.EQUAL);}|<NOTEQUAL>{jjtThis.operators.add(constants.NOTEQUAL);}) (Set() | Range() ) | <PAR_OPEN> OrExpr() <PAR_CLOSE>
 }
 
 

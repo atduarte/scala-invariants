@@ -5,6 +5,7 @@
   public Vector<Integer> operators;
   public String numVar;
   public boolean negative;
+  public boolean localVar;
   public int getID() throws ParseException{
 	return id;
   }
@@ -227,20 +228,34 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     try {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VAR:
+      case VAR_LOCAL:
          jjtn000.operators = new Vector<Integer>();
-        value = jj_consume_token(VAR);
-                    jjtn000.numVar =value.toString();
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case EQUAL:
-          jj_consume_token(EQUAL);
-                                                                jjtn000.operators.add(constants.EQUAL);
+        case VAR:
+          value = jj_consume_token(VAR);
+                            jjtn000.numVar =value.toString();
           break;
-        case NOTEQUAL:
-          jj_consume_token(NOTEQUAL);
-                                                                                                                    jjtn000.operators.add(constants.NOTEQUAL);
+        case VAR_LOCAL:
+          value = jj_consume_token(VAR_LOCAL);
+          jjtn000.numVar =value.toString();
+          jjtn000.localVar=true;
           break;
         default:
           jj_la1[5] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case EQUAL:
+          jj_consume_token(EQUAL);
+                  jjtn000.operators.add(constants.EQUAL);
+          break;
+        case NOTEQUAL:
+          jj_consume_token(NOTEQUAL);
+                                                                      jjtn000.operators.add(constants.NOTEQUAL);
+          break;
+        default:
+          jj_la1[6] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -253,7 +268,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
           Range();
           break;
         default:
-          jj_la1[6] = jj_gen;
+          jj_la1[7] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -264,7 +279,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         jj_consume_token(PAR_CLOSE);
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[8] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -306,7 +321,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
                                                                                     jjtn000.operators.add(constants.REC_BRAC_C);
         break;
       default:
-        jj_la1[8] = jj_gen;
+        jj_la1[9] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -327,7 +342,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
                                                                                                                                                                                                                                  jjtn000.operators.add(constants.REC_BRAC_C);
         break;
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[10] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -367,7 +382,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
           ;
           break;
         default:
-          jj_la1[10] = jj_gen;
+          jj_la1[11] = jj_gen;
           break label_2;
         }
         jj_consume_token(COMMA);
@@ -447,7 +462,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         jj_consume_token(INF);
         break;
       default:
-        jj_la1[11] = jj_gen;
+        jj_la1[12] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -485,7 +500,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         SumExpr_();
         break;
       default:
-        jj_la1[12] = jj_gen;
+        jj_la1[13] = jj_gen;
         ;
       }
     } catch (Throwable jjte000) {
@@ -526,7 +541,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
                                                                       jjtn000.operators.add(constants.OP_DIFF);
         break;
       default:
-        jj_la1[13] = jj_gen;
+        jj_la1[14] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -537,7 +552,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         SumExpr_();
         break;
       default:
-        jj_la1[14] = jj_gen;
+        jj_la1[15] = jj_gen;
         ;
       }
     } catch (Throwable jjte000) {
@@ -575,7 +590,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         multExpr_();
         break;
       default:
-        jj_la1[15] = jj_gen;
+        jj_la1[16] = jj_gen;
         ;
       }
     } catch (Throwable jjte000) {
@@ -620,7 +635,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
               jjtn000.operators.add(constants.OP_EXP);
         break;
       default:
-        jj_la1[16] = jj_gen;
+        jj_la1[17] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -661,7 +676,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
           ;
           break;
         default:
-          jj_la1[17] = jj_gen;
+          jj_la1[18] = jj_gen;
           break label_3;
         }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -673,7 +688,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
           jj_consume_token(OP_SUM);
           break;
         default:
-          jj_la1[18] = jj_gen;
+          jj_la1[19] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -696,7 +711,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
                                           jjtn000.operators.add(constants.VAR_LOCAL);
           break;
         default:
-          jj_la1[19] = jj_gen;
+          jj_la1[20] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -710,7 +725,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
         jj_consume_token(PAR_CLOSE);
         break;
       default:
-        jj_la1[20] = jj_gen;
+        jj_la1[21] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -744,13 +759,13 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[21];
+  final private int[] jj_la1 = new int[22];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x40,0x200,0x200,0x400,0x400,0x180000,0x9800,0x2020,0x1800,0x1800,0x20000,0x1a021a0,0x1800000,0x1800000,0x1800000,0x6400000,0x6400000,0x1800000,0x1800000,0x1a0,0x21a0,};
+      jj_la1_0 = new int[] {0x40,0x200,0x200,0x400,0x400,0xa0,0x180000,0x9800,0x20a0,0x1800,0x1800,0x20000,0x1a021a0,0x1800000,0x1800000,0x1800000,0x6400000,0x6400000,0x1800000,0x1800000,0x1a0,0x21a0,};
    }
 
   /** Constructor with InputStream. */
@@ -764,7 +779,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -779,7 +794,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -789,7 +804,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -800,7 +815,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -809,7 +824,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -819,7 +834,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -875,7 +890,7 @@ public class InvariantParser/*@bgen(jjtree)*/implements InvariantParserTreeConst
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 21; i++) {
+    for (int i = 0; i < 22; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

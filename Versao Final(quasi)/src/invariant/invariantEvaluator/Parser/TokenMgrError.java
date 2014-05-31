@@ -6,6 +6,7 @@
   public Vector<Integer> operators;
   public String numVar;
   public boolean negative;
+  public boolean localVar;
   public int getID() throws ParseException{
 	return id;
   }
@@ -157,4 +158,4 @@ public class TokenMgrError extends Error
     this(LexicalError(EOFSeen, lexState, errorLine, errorColumn, errorAfter, curChar), reason);
   }
 }
-/* JavaCC - OriginalChecksum=43520fcd388876372f85595a837d3e97 (do not edit this line) */
+/* JavaCC - OriginalChecksum=48cce4c367f72f3237b68900c2f5bc7d (do not edit this line) */

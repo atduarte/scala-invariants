@@ -5,6 +5,8 @@ package invariant
  */
 abstract class Invariant {
   var value:Double;
+  def getValue():Double={return value;}
+
 
   def +(arg:InvariantDouble) :  Double;
   def +(arg:Double) 	       :  Double

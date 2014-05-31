@@ -86,7 +86,7 @@ class BoolExpr(rootNode:SimpleNode,variables:Array[Invariant],macros:HashMap[Str
       if (node.operators.get(0)== InvariantParserConstants.NOTEQUAL){
          negate = true;
       }
-      expr.add(new BoolAtomValue(node.numVar,negate, node.jjtGetChild(0).asInstanceOf[SimpleNode], variables,macros));
+      expr.add(new BoolAtomValue(node.numVar,negate,node.localVar, node.jjtGetChild(0).asInstanceOf[SimpleNode], variables,macros));
     }
     else {
       moveDown(node.jjtGetChild(0).asInstanceOf[SimpleNode]);

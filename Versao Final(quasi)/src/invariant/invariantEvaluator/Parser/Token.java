@@ -6,6 +6,7 @@
   public Vector<Integer> operators;
   public String numVar;
   public boolean negative;
+  public boolean localVar;
   public int getID() throws ParseException{
 	return id;
   }
@@ -141,4 +142,4 @@ public class Token implements java.io.Serializable {
   }
 
 }
-/* JavaCC - OriginalChecksum=217a0f3f6dca10ae30944f54b4eb8995 (do not edit this line) */
+/* JavaCC - OriginalChecksum=05aa0b9638fc7068da491cc86b8b1ed6 (do not edit this line) */

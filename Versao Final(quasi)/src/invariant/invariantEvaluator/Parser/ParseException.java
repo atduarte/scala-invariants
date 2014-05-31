@@ -6,6 +6,7 @@
   public Vector<Integer> operators;
   public String numVar;
   public boolean negative;
+  public boolean localVar;
   public int getID() throws ParseException{
 	return id;
   }
@@ -197,4 +198,4 @@ public class ParseException extends Exception {
    }
 
 }
-/* JavaCC - OriginalChecksum=d3e10612dfffadc8600aef9898b801ba (do not edit this line) */
+/* JavaCC - OriginalChecksum=e7c60098c516efe4df94c05cdcbc0872 (do not edit this line) */

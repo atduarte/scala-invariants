@@ -15,6 +15,7 @@ class SimpleNode implements Node {
     public Vector<Integer> operators;
     public String numVar;
     public boolean negative;
+    public boolean localVar;
     public int getID() throws ParseException{
         return id;
     }

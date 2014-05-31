@@ -6,19 +6,18 @@ import invariant.invariantEvaluator.BoolExpr.BoolExpr
 import invariant.Invariant
 import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
 import scala.collection.mutable.HashMap
-import invariant.invariantEvaluator.Exceptions.{InvariantExceptionIllegalVariable, InvariantExceptionSyntax, InvariantExceptionIllegalMacro}
+import invariant.invariantEvaluator.Exceptions.{InvariantExceptionIllegalInfinite, InvariantExceptionIllegalVariable, InvariantExceptionSyntax, InvariantExceptionIllegalMacro}
+import invariant.invariantEvaluator.AritmExpr.{AritmInfiniteException, AritmExpr}
 
 
 class InvariantEvaluator(expression : String,variables:Array[Invariant]){
 
-  var expr:String  = expression + "\n"
+  var expr:String  = expression
 	var parser = new InvariantParser(new ByteArrayInputStream(expr.getBytes));
   var tree:SimpleNode = null;
   try {
     tree = parser.Inv_exp
-  }catch{
-    case e:ParseException => throw new InvariantExceptionSyntax(expr,e.toString);
-  }
+  }catch{case e:ParseException => throw new InvariantExceptionSyntax(expr,e.toString);}
 
   var macros:HashMap[String,VarDecExpr]=new HashMap[String,VarDecExpr];
 
@@ -37,8 +36,8 @@ class InvariantEvaluator(expression : String,variables:Array[Invariant]){
     nexpr.evaluate()
   }catch {
     case e:InvariantExceptionIllegalVariable => e.expr=expr;throw e;
+    case e:InvariantExceptionIllegalInfinite => e.expr=expr;throw e;
   }
-
 
   def evaluate():Boolean={
       return nexpr.evaluate();
