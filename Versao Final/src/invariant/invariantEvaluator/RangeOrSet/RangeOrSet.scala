@@ -6,7 +6,7 @@ import invariant.invariantEvaluator.AritmExpr.{AritmInfiniteException, AritmExpr
 import invariant.Invariant
 import scala.collection.mutable.HashMap
 import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
-import invariant.invariantEvaluator.Exceptions.InvariantExceptionIllegalInfinite
+import invariant.invariantEvaluator.Exceptions.InvariantExceptionIllegalInfiniteSet
 
 class RangeOrSet(rootNode:SimpleNode,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) extends InvariantParserConstants with InvariantParserTreeConstants {
 
@@ -56,7 +56,7 @@ class RangeOrSet(rootNode:SimpleNode,variables:Array[Invariant],macros:HashMap[S
       }
       return false;
     }catch{
-      case e:AritmInfiniteException => throw new InvariantExceptionIllegalInfinite();
+      case e:AritmInfiniteException => throw new InvariantExceptionIllegalInfiniteSet();
     }
   }
 }

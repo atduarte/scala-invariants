@@ -13,7 +13,7 @@ object Main {
 
     var b:InvariantDouble = new InvariantDouble(2);
     input.restrict("" +
-      "var a=2+2;\n" +
+      "var a=2;\n" +
       "var b=2+3;\n"+
       "$0=]@inf,@inf[\n",b);
    // var scan: Scanner = new java.util.Scanner(System.in)
