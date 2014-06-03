@@ -48,13 +48,14 @@ class RangeOrSet(rootNode:SimpleNode,variables:Array[Invariant],macros:HashMap[S
   }
 
   def evaluateSet(newvalue:Double):Boolean = {
+    var bool = false;
     try {
       for (i <- 0 to aritms.size() - 1) {
         if (newvalue == aritms.get(i).evaluate()) {
-          return true;
+          bool= true;
         }
       }
-      return false;
+      return bool;
     }catch{
       case e:AritmInfiniteException => throw new InvariantExceptionIllegalInfiniteSet();
     }

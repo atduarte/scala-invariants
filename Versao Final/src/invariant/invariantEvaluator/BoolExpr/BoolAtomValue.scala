@@ -5,6 +5,7 @@ import invariant.invariantEvaluator.Parser.SimpleNode
 import invariant.Invariant
 import scala.collection.mutable.HashMap
 import invariant.invariantEvaluator.VarDecExpr.VarDecExpr
+import invariant.invariantEvaluator.Exceptions.InvariantExceptionIllegalMacro
 
 
 class BoolAtomValue(strVar:String,neg:Boolean,localVar:Boolean,ros:SimpleNode,variables:Array[Invariant],macros:HashMap[String,VarDecExpr]) extends BoolAtom{
@@ -25,8 +26,13 @@ class BoolAtomValue(strVar:String,neg:Boolean,localVar:Boolean,ros:SimpleNode,va
   def evaluate:Boolean={
 
     var evalVariable:Double = variables(index).getValue();
-    if (localVar){evalVariable = macros.get(variableString).get.evaluate;}
-
+    try {
+      if (localVar) {
+        evalVariable = macros.get(variableString).get.evaluate;
+      }
+    }catch{
+      case e:NoSuchElementException => throw new InvariantExceptionIllegalMacro(variableString,"");
+    }
     if (negate){return !rangeOrSet.evaluate(evalVariable);}
     return rangeOrSet.evaluate(evalVariable)
   }

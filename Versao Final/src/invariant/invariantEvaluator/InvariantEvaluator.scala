@@ -30,6 +30,7 @@ class InvariantEvaluator(expression : String,variables:Array[Invariant]){
       case e:java.util.NoSuchElementException => throw new InvariantExceptionIllegalMacro(tree.jjtGetChild(i).asInstanceOf[SimpleNode].numVar,expr);
       case e:InvariantExceptionIllegalVariable => e.expr=expr;throw e;
       case e:InvariantExceptionIllegalInfiniteVar=> e.expr=expr;throw e;
+      case e:InvariantExceptionIllegalMacro      => e.expr=expr;throw e;
     }
   }
   var nexpr:BoolExpr = new BoolExpr(tree.jjtGetChild(tree.jjtGetNumChildren()-1).asInstanceOf[SimpleNode],variables,macros)
@@ -38,6 +39,7 @@ class InvariantEvaluator(expression : String,variables:Array[Invariant]){
   }catch {
     case e:InvariantExceptionIllegalVariable => e.expr=expr;throw e;
     case e:InvariantExceptionIllegalInfiniteSet => e.expr=expr;throw e;
+    case e:InvariantExceptionIllegalMacro      => e.expr=expr;throw e;
   }
 
   def evaluate():Boolean={
