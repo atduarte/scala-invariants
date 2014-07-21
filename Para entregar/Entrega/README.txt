@@ -1,5 +1,4 @@
-﻿MM
-**PROJECT TITLE: #12 Scala Invariants 
+﻿**PROJECT TITLE: #12 Scala Invariants 
 
 **GROUP: T01G02
 
